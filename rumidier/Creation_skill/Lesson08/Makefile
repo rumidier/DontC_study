@@ -1,6 +1,6 @@
 CC = gcc
 
-PROGRAMS = inch_change_cm byte_ch_byte c_to_f time_to_sec
+PROGRAMS = inch_change_cm byte_ch_byte c_to_f time_to_sec yun_year
 
 all: $(PROGRAMS)
 
@@ -14,6 +14,9 @@ c_to_f: c_to_f.c
 	$(CC) -Wall -o $@ $^
 
 time_to_sec: time_to_sec.c
+	$(CC) -Wall -o $@ $^
+
+yun_year: yun_year.c
 	$(CC) -Wall -o $@ $^
 
 clean:
