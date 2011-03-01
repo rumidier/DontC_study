@@ -1,4 +1,5 @@
 #include <stdio.h>
+
 void main()
 {
 	int i = 0, j = 0, k = 0;
