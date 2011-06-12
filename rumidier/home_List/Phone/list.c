@@ -34,10 +34,10 @@ void
 list_destroy (List *list)
 {
   void *data;
+
   /***
    * 각 항목 삭제
    */
-
   while (list_size (list) > 0)
     {
       if (list_rem_next (list, NULL, (void **)&data) == 0 && list->destroy !=

@@ -1,0 +1,461 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" 
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+ <title>[Don't C study]</title> 
+
+<!-- metadata -->
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta name="generator" content="S5" />
+<meta name="version" content="S5 1.1" />
+<meta name="presdate" content="20050728" />
+<meta name="author" content="Eric A. Meyer" />
+<meta name="company" content="Complex Spiral Consulting" />
+<!-- configuration parameters -->
+<meta name="defaultView" content="slideshow" />
+<meta name="controlVis" content="hidden" />
+<!-- style sheet links -->
+<link rel="stylesheet" href="ui/default/slides.css" type="text/css" media="projection" id="slideProj" />
+<link rel="stylesheet" href="ui/default/outline.css" type="text/css" media="screen" id="outlineStyle" />
+<link rel="stylesheet" href="ui/default/print.css" type="text/css" media="print" id="slidePrint" />
+<link rel="stylesheet" href="ui/default/opera.css" type="text/css" media="projection" id="operaFix" />
+<!-- S5 JS -->
+<script src="ui/default/slides.js" type="text/javascript"></script>
+</head>
+<body>
+
+<div class="layout">
+<div id="controls"><!-- DO NOT EDIT --></div>
+<div id="currentSlide"><!-- DO NOT EDIT --></div>
+<div id="header"></div>
+<div id="footer">
+<h1>2011/3/5 토요일</h1>
+<h2>Lesson 05 자료형과 변수 그리고 상수의 표현</h2>
+</div>
+
+</div>
+
+
+<div class="presentation">
+
+<div class="slide">
+<h2><b>자료형과 변수 그리고 상수의 표현</b></h2>
+<h1> C언어 스터디 2팀 </h1>
+<h3> 발표자 : 조한영 </h3>
+</div>
+
+
+<div class="slide">
+<h1> 기본 자료형(Data Type): <정수형> </h1>
+<ul class=incremental>
+자료형을 나누는 기준
+<li> 기준 1 : 표현할 데이터의 종류 (실수 혹은 정수)</li>
+<li> 기준 2 : 바이트 크기</li>
+
+</ul>
+<div class="handout">
+[any material that should appear in print but not on the slide]
+</div>
+</div>
+
+<div class="slide">
+<h1> 정수 자료형의 종류</h1>
+<ul class=incremental>
+
+<li> short int는 </li> <b> short </b>
+<li> long int는 </li> <b> long </b>  
+<li> long long int 는 </li> <b>long long</b>
+
+</ul>
+<div class="handout">
+[any material that should appear in print but not on the slide]
+</div>
+</div>
+
+<div class="slide">
+<h1> 정수 자료형의 크기</h1>
+<ul>
+
+<li> char <= short <= int <= long  <= long long </li>
+<li> 컴파일러 별로 자료형의 크기가 다르기 때문에 자료형의 크기는 정해지지 않습니다. </li>
+
+<p style="width: 1000px; margin: 0 auto; text-align: center;">
+<img src="Pix/p104.png"  alt="" />
+</p>
+
+</ul>
+</div>
+
+<div class="slide">
+<h1> 정수 자료형의 크기</h1>
+<ul>
+<li> 자료형의 크기 표</li>
+
+<p class="imgcon" id="anim">
+<p style="width: 1000px; margin: 0 auto; text-align:">
+<img src="Pix/p105.png"  alt="" id="me01"class="incremental" />
+</p>
+</p>
+
+</ul>
+</div>
+
+<div class="slide">
+<h1>자료형을 잘못 선택 했어요!</h1>
+<ul class="incremental">
+
+  <li>언더 플로우 (underflow)</li>
+     <h2> 표현 범위값 보다 이하의 값을 표현 하려고 하였을시 발생되는 현상 </h2>
+  <li>오버 플로우 (overflow)</li>
+      <h2>표현 범위값 보다 이상의 값을 표현 하려고 하였을시 발생되는 현상 </h2>
+
+</ul>
+<div class="handout">
+[any material that should appear in print but not on the slide]
+</div>
+</div>
+
+<div class="slide">
+<h1> 자료형의수가 두배 unsigned!! </h1>
+<ul class=incremental>
+
+<b> unsigned를 붙여 주게 되면 signed 과 다르게 음의 값의 표현 을 하지않고 양의 값만 표현 합니다 </b>
+<b> 결과적으로 양의 표현 범위의 값이 두배로 늘어 나게 됩니다. </b>
+
+<li> unsigned int : unsigend를 붙여 양의 값의 범위를 늘립니다. </li>
+<li> signed int : signed를 붙여 양,음수 의 표현을 모두 할수있습니다. </li>
+<li> int : signed를 떼고 사용합니다 (signed int 와 같습니다.) </li>
+
+</ul>
+<div class="handout">
+[any material that should appear in print but not on the slide]
+</div>
+</div>
+
+<div class="slide">
+<h1> C언어의 기본 자료형(Data Type): <실수형> </h1 >
+ <h2> <b> 정밀도가 사용된 이유 </b> </h2>
+<ul>
+<ul class=incremental>
+      <li> 실수의 표현에는 오차가 존재합니다. 오차에 의한 프로그램의 오류를 방지 하기 위해선 
+          오차의 발생을 줄여야 합니다. </li>
+
+
+<p style="width: 1000px; margin: 0 auto; text-align:">
+<img src="Pix/p110-1.png"  alt="" title= "two pic" />
+</p>
+</ul>
+<div class="handout">
+[any material that should appear in print but not on the slide]
+</div>
+</div>
+
+
+<div class="slide">
+<h1> C언어의 기본 자료형(Data Type): <실수형> </h1 >
+<ul>
+
+<h2><b> 일반적인 실수 자료형의표현 </b> </h2>
+   <li> 보편 적인 시스템에서의 자료형 별 데이터 표현 범위 </li>
+
+<p style="width: 1000px; margin: 0 auto; text-align:">
+<img src="Pix/p110-2.png"  alt="" title= "two pic" />
+</p>
+
+</ul>
+<div class="handout">
+[any material that should appear in print but not on the slide]
+</div>
+</div>
+
+
+<div class="slide">
+<h1> 정수 자료형의 선택 기준 </h1>
+
+<h3><b>데이터를 처리하는 경우에 있어서 자료형 선택 </b></h3>
+<li> 메모리의 효율을 우선시 할까요? </li> 
+<li> 연산속도를 우선시 할까요? </li>
+
+<ul class="incremental">
+
+<li> 메모리 공간의 효율적 측면으로 본다면 범위에 맞는 자료형을 선택 합니다 </li>
+<li> int형보다 작은 크기의 데이터를 가지고 덧셈 연산을 할경우 int 형으로 바뀌어서 연산을 하기 때문에
+정수 계산을 할때는 int형을 쓰게 됩니다. </li>
+
+</ul>
+<div class="handout">
+[any material that should appear in print but not on the slide]
+</div>
+</div>
+
+<div class="slide">
+<h1> Integer(Integral) Promition : 정수의 승격 </h1>
+<ul>
+
+<li> int 작은 크기의 데이터를 가지고 덧셈 연산을 할경우, 그 데이터를 int형으로 바꿔서 연산을 하게 된다. </li>
+
+<p style="width: 1000px; margin: 0 auto; text-align:">
+<img src="Pix/p113-1.png"  alt="" title= "two pic" />
+</p>
+
+</ul>
+<div class="handout">
+[any material that should appear in print but not on the slide]
+</div>
+</div>
+
+<div class="slide">
+<h1>왜 하필 int형이야?  </h1>
+<ul class=incremental>
+
+ <li> 컴퓨터 시스템은 8비트 16비트 32비트 64비트 단위로 발전 해왔습니다. </li>
+ <li> int 형은 이런 시스템에 맞추어 표현 범위가 달라지게 됩니다. </li>
+ <li> int 형으로 데이터를 변환하는것이 시스템 처리상 가장 빠르게
+      처리 할수 있는 형태의 자료형으로 변환 한다는 의미 입니다. </li>
+
+</ul>
+<div class="handout">
+[any material that should appear in print but not on the slide]
+</div>
+</div>
+
+
+<div class="slide">
+<h1> 적절한 자료형의 선택 기준: 실수 자료형 기준 </h1>
+<ul>
+<ul> <li> <b> float?  double? </b>
+<ul>
+<li >
+<font size= 5px>
+float형은 범위가 너무 작은듯 하다. 하지만 long double은 너무커 불필요할듯 하다
+어떤걸 선택 할까?
+</font>
+</li>
+</ul>
+</li> </ul>
+
+<ul> <li><b> double을 선택 하라</b>
+<ul>
+<li >
+<font size= 5px>
+double을 선택함으로서 오차를 줄여 보다 안정적으로 만들수 있다.
+</font>
+</li>
+</ul>
+</li> </ul>
+
+
+<ul> <li><b> 정밀도 </b> 
+<ul>
+<li >
+<font size= 5px>
+실수 자료형은 표현방식의 특성상 오차가 존재하기 때문에 정밀도가 우선시 되야한다.
+</font>
+</li>
+</ul>
+</li> </ul>
+
+
+</ul>
+
+<div class="handout">
+[any material that should appear in print but not on the slide]
+</div>
+</div>
+
+
+<div class="slide">
+<h1> 변수의 선언방식과 조건 </h1>
+<ul>
+   <h2><b> 변수는 선언(Declaration) 한다고 표현한다.</b> </h2>
+   <li> 변수의 이름이 되기 위한 조건 </li>
+   <ul>
+   <li>규칙.1 변수의 이름은 알파벳, 숫자, 언더바(_)를 조합한다.</li>
+            ex) int rumidier_lesson_05;
+   <li>규칙.2 변수의 이름은 대소문자가 구분된다.(money와 MONEY는 다르다)</li>
+            ex) int money;  
+                int MONEY;
+   <li>규칙.3 변수의 이름은 숫자로 시작할 수 없고. C언어의 문법을 구성하는, 의미를 지니는
+   키워드는 사용이 불가능 하다.</li>
+            ex) int 7Thval;
+   <li>규칙.4 변수의 이름에는 공백이 포함될 수 없다.</li>
+            ex) int name Man;
+   </ul>
+
+</ul>
+<div class="handout">
+[any material that should appear in print but not on the slide]
+</div>
+</div>
+
+
+<div class="slide">
+<h1> 변수의 상대적인 개념 상수! </h1>
+<ul>
+<b> 무엇을 상수(Constant)라 하는가? </b>
+<li> 상수란 변경이 불가능한 수를 의미한다 </li>
+<ul>
+<li>정수 2와 정수 5는 메모리 공간에 저장되지만 변경시킬수 있는 방법이 없다 이것이 상수다!</li>
+<li>n은 두 정수의 연산값을 저장할수 있고 저장된 값을 변경 시킬수 있다 이것이 변수다!</li>
+</ul>
+<p style="width: 1000px; margin: 0 auto; text-align:">
+<img src="Pix/p121.png"  alt="" title= "two pic" />
+</p>
+</ul>
+
+<div class="handout">
+[any material that should appear in print but not on the slide]
+</div>
+</div>
+
+
+<div class="slide">
+<h1> 리터럴(Literal)상수와 심볼릭(Symbolic)상수 </h1>
+<ul>
+<li> 리터럴(Literal) 상수 </li>
+<ul>
+<li> 변수와 달리 별도의 이름을 갖지 않는 상수들을 가리켜 '리터럴 상수'(글자 그대로의)라 한다. </li>
+    <ul>
+    <li>정수 리터럴 (상수)</li>
+        예)10, 20, 30, 40, 50
+    <li>실수 리터럴 (상수)</li>
+        예)0.1, 0.2, 0.3, 0.4, 0.5
+    <li>문자 리터럴 (상수)</li>
+        예)'A', 'B', 'C', 'D', 'E'
+    <li>정수 리터럴 (상수)</li>
+        예)"ABCDE"
+    </ul>
+</ul>
+<li> 심볼릭(Symbolic) 상수 </li>
+<ul>
+<li> int num = 10; 변수 num의 값이 변경되지 않도록 막는다면 num은 10이라는 '심볼릭 상수'(상징하는)를 의미 한다.
+</ul>
+
+</ul>
+<div class="handout">
+[any material that should appear in print but not on the slide]
+</div>
+</div>
+
+
+<div class="slide">
+<h1> const 상수 </h1>
+<ul>
+</li>
+<h2> 일반적인 네이밍 규칙 </h2>
+
+<li> 상수의 이름은 대문자로 표시 한다. </li>
+<li> 둘 이상의 단어를 묶을 때는 언더바(_)로 이어서 짓는다. </li>
+
+</ul>
+<div class="handout">
+[any material that should appear in print but not on the slide]
+</div>
+</div>
+
+
+<div class="slide">
+<h1>const 사용</h1>
+<ul>
+<li> 올바른 사용 </li>
+int main (void)
+  <ul> {
+    <ul> const int MAX_LEN = 369; </li></ul>
+    <ul> const double PI = 3.1515; </li></ul>
+  }
+  </ul>
+
+<li> 잘못된 사용 </li>
+int main (void)
+  <ul> {
+    <ul> const int MAX_LEN = 369; </li></ul>
+    <ul> MAX_LEN = 280;  // 값의 변경 불가! 컴파일 에러!</ul>
+  }
+ </ul>
+</ul>
+
+</ul>
+<div class="handout">
+[any material that should appear in print but not on the slide]
+</div>
+</div>
+
+
+
+<div class="slide">
+<h1> 정수형 상수에 붙일 수 있는 접미사들  </h1>
+<ul>
+<li> 정수형 상수에 붙이는 접미사는 실수형과 다르다. </li>
+<li> 접미사는 대소문자를 가리지 않는다. </li>
+
+<li> char형은 접미사로 정의 되어 있지 않았다. </li>
+  <ul class="incremental">
+  <b>왜? char형은 문자를 표현하기 위해 디자인 되었기 때문이다.</b></ul>
+
+<li> short 사용빈도수가 낮아 정의 되지 않았다. </li>
+  <ul class="incremental">
+  <b>short형 상수 위치에 숫자가 오면 int형이 아닌 short형으로 인식한다.</b> </ul>
+    
+</ul>
+<div class="handout">
+[any material that should appear in print but not on the slide]
+</div>
+</div>
+
+
+
+<div class="slide">
+<h1> 정수형 상수에 붙일 수 있는 접미사들  </h1>
+<ul>
+
+<li> 접미사에 따른 정수형 상수의 자료형 </li>
+<p style="width: 1200px; margin: 0 auto; text-align:">
+<img src="Pix/p128-1.png"  alt="" title= "two pic" />
+</p>
+</ul>
+<div class="handout">
+[any material that should appear in print but not on the slide]
+</div>
+</div>
+
+<div class="slide">
+<h1> 실수형 상수에 붙일 수 있는 접미사들  </h1>
+<ul>
+<li> 접미사 L </li>
+  <ul class="incremental"> <b> L은 정수형에 오느냐 실수형에 오느냐에 따라 내용이 달라진다. </b>
+  </ul>
+
+<p style="width: 1300px; margin: 0 auto; text-align:">
+<img src="Pix/p129-1.png"  alt="" title= "two pic" />
+</p>
+</ul>
+<div class="handout">
+[any material that should appear in print but not on the slide]
+</div>
+</div>
+
+<div class="slide">
+<h1> 상수 표현에 정확한 이해  </h1>
+<ul>
+<li> 실수형 상수는 무조건 double형? </li>
+  <ul> 실수형 상수는 무조건 double형으로 표현되고 접미사를 붙이면 접미사형에 따라 표현 된다.
+  </ul>
+<li> 정수형 상수는 무조건 int형? </li>
+  <ul> <li> 기본적으로 정수형 상수가 int형으로 표현된다. </li>
+  <li> 기본적이지 <b>무조건이 아니다! </b></li>
+  <li> 정수형 상수는 경우에 따라서 다양한 형태로 표현 될수 있기 때문이다. </li> 
+
+</ul>
+<div class="handout">
+[any material that should appear in print but not on the slide]
+</div>
+</div>
+
+
+</div>
+
+</body>
+</html>

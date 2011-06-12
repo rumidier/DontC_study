@@ -1,24 +1,20 @@
-/*******************
- * list.c
- */
-
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
 #include "list.h"
+#include "book.h"
 
-/*********
+/*
  * list_init
  */
 
 void
-list_init (List     *list,
-           void    (*destroy) (void *data))
+list_init (List *list, void (*destroy) (void *data))
 {
-  /***
+  /*
    * 리스트 초기화
    */
-
   list->size = 0;
   list->destroy = destroy;
   list->head = NULL;
@@ -27,28 +23,29 @@ list_init (List     *list,
   return;
 }
 
-/**************
+/*
  * list_destroy
  */
 void
 list_destroy (List *list)
 {
   void *data;
-  /***
+  /*
    * 각 항목 삭제
    */
-
-  while (list_size (list) > 0)
+  while (list_size(list) > 0)
     {
-      if (list_rem_next (list, NULL, (void **)&data) == 0 && list->destroy !=
-          NULL)
+      if (list_rem_next (list, NULL, (void **)&data) == 0 && list -> destroy != NULL)
         {
+          /*
+           * 동적으로 할당된 자료를 해제하기 위해 사용자 정의 함수 호출
+           */
           list->destroy (data);
         }
     }
 
-  /**********
-   * 지금은 아무 연산도 허용되지 않지만 예방책으로 구조체를 지움
+  /*
+   * 지금은 아무 연산도 허용되지 않지만 예방책으로 구조체를 지움.
    */
 
   memset (list, 0, sizeof (List));
@@ -56,63 +53,58 @@ list_destroy (List *list)
   return;
 }
 
-/*************
+/*
  * list_ins_next
  */
 
 int
-list_ins_next (List          *list,
-               ListElmt      *element,
-               const void    *data)
+list_ins_next (List       *list,
+               ListElmt   *element,
+               const void *data)
 {
   ListElmt *new_element;
-  /*************
-   * 항목을 위한 메모리 할당
+  /*
+   * 항목을 위한 메모리 할당.
    */
-
   if ((new_element = (ListElmt *) malloc (sizeof (ListElmt))) == NULL)
     return -1;
-
-  /*******
+  /*
    * 리스트에 항목 삽입.
    */
-
   new_element->data = (void *) data;
 
-  if (element == NULL) {
-    /**********
-     * 리스트의 head에 삽입.
-     */
-
-    if (list_size (list) == 0)
-      list->tail = new_element;
-
-    new_element->next = list->head;
-    list->head = new_element;
-  }
-  else
+  if (element == NULL)
     {
-      /**************
-       * head가 아닌 곳에 삽입 처리.
+      /*
+       * 리스트의 head에 삽입.
        */
 
-      if (element->next == NULL)
+      if (list_size (list) == 0)
         list->tail = new_element;
 
+      new_element->next = list->head;
+      list->head = new_element;
+    }
+  else
+    {
+      /*
+       * head가 아닌 곳에 삽입 처리.
+       */
+      if (element->next == NULL)
+        list->tail = new_element;
       new_element->next = element->next;
       element->next = new_element;
     }
 
-  /**********
+  /*
    * 삽입된 항목을 반영하기 위해 리스트의 size 조정.
    */
-
-  list -> size++;
+  list->size++;
 
   return 0;
 }
 
-/**********************************
+/*
  * list_rem_next
  */
 
@@ -123,34 +115,40 @@ list_rem_next (List      *list,
 {
   ListElmt *old_element;
 
-  /******
+  /*
    * 빈 리스트에서 항목 삭제 금지.
    */
 
   if (list_size (list) == 0)
-    return -1;
+    {
+      return -1;
+    }
 
-  /************
+  /*
    * 리스트에서 항목 삭제.
    */
 
   if (element == NULL)
     {
-      /*************
+      /*
        * head 항목 삭제.
        */
+
       *data = list->head->data;
       old_element = list->head;
       list->head = list->head->next;
 
       if (list_size (list) == 1)
-        list->tail = NULL;
+        {
+          list->tail = NULL;
+        }
     }
   else
     {
-      /*******
+      /*
        * head가 아닌 항목 삭제.
        */
+
       if (element->next == NULL)
         return -1;
 
@@ -161,16 +159,14 @@ list_rem_next (List      *list,
       if (element->next == NULL)
         list->tail = element;
     }
-  /**************
+  /*
    * 추상 자료형에 할당된 메모리 해제.
    */
 
   free (old_element);
-
-  /****************
+  /*
    * 삭제된 항목을 반영하기 위해 리스트의 size조정
    */
-
   list->size--;
 
   return 0;

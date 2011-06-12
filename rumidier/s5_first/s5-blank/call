@@ -1,0 +1,22 @@
+25-1 Call-By-value vs Call-By-Reference
+
+포인터를 이용하면 함수 내에서 외부에 있는 변수에 직접 접근이 가능하지요.
+
+잘못 정의된 Swap 함수 : Call-by-Value 버전
+값에 의한 호출
+n1과 n2에 저장된 값은 교환이 되었다.
+매개변수에 저장된 값이 변경 될뿐 main()에
+선언된 val1과 val2에 저장된 값은 변화가 생기지 않는다.
+
+제대로 정의된 Swap 함수 : Call-By-reference 버전
+
+
+
+
+
+26-1 한정자 (Type Qualifiers) 그리고 const
+
+
+포인터의 const 선언
+
+포인터의 const 선언과 관련하여 좋은 모델 구경하기.

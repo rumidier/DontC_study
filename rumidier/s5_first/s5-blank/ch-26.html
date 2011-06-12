@@ -1,0 +1,230 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<title>[Don't C study]</title> 
+
+<!-- metadata -->
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta name="generator" content="S5" />
+<meta name="version" content="S5 1.1" />
+<meta name="presdate" content="20050728" />
+<meta name="author" content="Eric A. Meyer" />
+<meta name="company" content="Complex Spiral Consulting" />
+<!-- configuration parameters -->
+<meta name="defaultView" content="slideshow" />
+<meta name="controlVis" content="hidden" />
+<!-- style sheet links -->
+<link rel="stylesheet" href="ui/default/slides.css" type="text/css" media="projection" id="slideProj" />
+<link rel="stylesheet" href="ui/default/outline.css" type="text/css" media="screen" id="outlineStyle" />
+<link rel="stylesheet" href="ui/default/print.css" type="text/css" media="print" id="slidePrint" />
+<link rel="stylesheet" href="ui/default/opera.css" type="text/css" media="projection" id="operaFix" />
+<!-- S5 JS -->
+<script src="ui/default/slides.js" type="text/javascript"></script>
+</head>
+<body>
+
+<div class="layout">
+<div id="controls"><!-- DO NOT EDIT --></div>
+<div id="currentSlide"><!-- DO NOT EDIT --></div>
+<div id="header"></div>
+<div id="footer">
+<h1>2011/5/1 일요일</h1>
+<h2>
+Chapter 26 매크로와 선행처리기(Preprocessor)
+</h2>
+</div>
+
+</div>
+
+
+<div class="presentation">
+
+<div class="slide">
+
+<h1>메모리 관리와 메모리의 동적 할당</h1>
+<ul>
+<li><b>선행처리기와 매크로</li>
+<li><b>대표적인 선행처리 명령문</li>
+<li><b>조건부 컴파일(Conditional Compilation)을 위한 매크로</li>
+<li><b>매개변수의 결합과 문자열화</li>
+</ul>
+<h3>발표자: 조한영</h3>
+</div>
+
+
+<div class="slide">
+<h1>선행처리기와 매크로</h1>
+
+<br>
+<h2>전처리 == 선행처리</h2>
+<ul>
+<li>소스코드는 컴파일러에 의해 컴파일 되기 이전에 선행으로 처리됨</li>
+<br>
+<li>선행처리기는 명령문대로 소스코드의 일부를 수정함</li>
+<br>
+<li>선행처리 명령문은 #문자로 시작함 (ex: #include &lt;stdio.h&gt;)</li>
+</ul>
+<div class="handout">
+[any material that should appear in print but not on the slide]
+</div>
+</div>
+
+<div class="slide">
+<h1>대표적인 선행처리 명령문</h1>
+<br>
+<h2>#define PI 3.14</h2>
+<ul>
+<li>#define : 지시자 </li>
+<br>
+<li>PI : 매크로 </li>
+<br>
+<li>3.14 : 매크로 몸체</li>
+</ul>
+
+</p>
+<div class="handout">
+[any material that should appear in print but not on the slide]
+</div>
+</div>
+
+
+<div class="slide">
+<h1>#define : Object-like macro</h1>
+<br>
+<p>
+#define PI 3.14<br>
+PI 라는 매크로 를 몸체인 3.14로 전부 치환하라
+</p>
+<h2>#define : Function-like macro</h2>
+<p>
+#define SQUARE(X) X*X<br>
+SQUARE(X) 패턴 등장시 (X) 를 X*X 로 치환 하라.<br>
+매크로 확장(maxro expansion) 이라하며 함수와 유사한 선행처리 기법
+</p>
+<div class="handout">
+[any material that should appear in print but not on the slide]
+</div>
+</div>
+
+<div class="slide">
+<h1>두줄에 걸친 매크로</h1>
+<p>#define SQUARE(X)<br>
+    ((X) *(X))<br>
+    이러한 방식으로 쓰고 싶다면 \를 줄끝에 추가한다
+<p>#define SQUARE(X) \<br>
+    ((X) *(X))<br>
+<h2>매크로에서 정의된 매크로 사용</h2>
+예제코드:
+<a href="http://codepad.org/qCKnZatx">two-line.c</a>
+<div class="handout">
+[any material that should appear in print but not on the slide]
+</div>
+</div>
+
+<div class="slide">
+<h1>매크로 함수의 장점</h1>
+<br>
+<ol>
+<li>자료형에 따라 함수를 정의 하지 않음</li>
+<li>매크로 함수는 일반 함수에 비해 실행속도가 빠름</li>
+<ul>
+<li>호출된 함수를 위한 스택 메모리 할당</li>
+<li>실행위치의 이동과 매개변수로의 인자 전달</li>
+<li>return문에 의한 값의 반환</li>
+</ul>
+</ol>
+<div class="handout">
+[any material that should appear in print but not on the slide]
+</div>
+</div>
+
+<div class="slide">
+<h1>매크로 함수의 단점</h1>
+<br>
+<ol>
+<li>정의 하기가 까다롭다</li>
+<li>디버깅 하기가 난감하다</li>
+</ol>
+예제코드:
+<a href="http://codepad.org/9GAe8tVl">debug.c</a>
+<div class="handout">
+[any material that should appear in print but not on the slide]
+</div>
+</div>
+
+<div class="slide">
+<h1>조건부 컴파일을 위한 매크로</h1>
+<ul>
+<br>
+<li>#if...#endif : 참이라면 ... 실행</li>
+<br>
+<li>#ifdef...#endif : 매크로가 정의 되었다면 ... 실행</li>
+<br>
+<li>#ifndef...#endif : 매크로가 정의 되지 않았다면 ... 실행</li>
+</ul>
+<div class="handout">
+[any material that should appear in print but not on the slide]
+</div>
+</div>
+
+<div class="slide">
+<h1>조건부 컴파일(Conditional Compilation)을 위한 매크로</h1>
+<ul>
+<br>
+<li>#else의 삽입 : #if, #ifdef, #ifndef에만 해당</li>
+<br>
+<li>#elif의 삽입 : #if에만 해당</li>
+<br>
+<li>#if의 한계와 #ifdef의 한계 : 개별적으로 조건선택문에 대한 제약이 있다.</li>
+<br>
+<li>#if와 함께 사용할 수 있는 defined 연산자: defined 문을 활용하여 한계를 벗어남</li>
+</ul>
+<div class="handout">
+[any material that should appear in print but not on the slide]
+</div>
+</div>
+
+<div class="slide">
+<h1>매크로 # 연산자</h1>
+<br>
+<h2>매개 변수를 문자열로</h2>
+<p>
+printf (STR(%d, %c, %s), 10, 'A', STR(string));
+<br>
+<br>
+printf ("%d, %c, %s", 10, 'A', "string");
+</p>
+예제코드:
+<a href="http://codepad.org/bqi8PoWR">exam-#.c</a>
+<div class="handout">
+[any material that should appear in print but not on the slide]
+</div>
+</div>
+
+<div class="slide">
+<h1>매크로 ## 연산자</h1>
+<br>
+<h2>필요한 형태로 조합하기</h2>
+<p>
+실행 불가능 코드 <br>
+#define		STNUM(Y, S, P)		YSP
+<br>
+#define		STNUM(Y, S, P)		Y S P
+<br>
+<br>
+대안책<br>
+#define	 	STNUM((Y) * 100000 + (S) * 1000 + (P))
+</p>
+해결 예제코드:
+<a href="http://codepad.org/UdZe3APg">exam-##.c</a>
+<div class="handout">
+[any material that should appear in print but not on the slide]
+</div>
+</div>
+
+</body>
+</html>

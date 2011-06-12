@@ -1,0 +1,201 @@
+개인 정보 관리 프로그램
+=======================
+
+----
+설명
+----
+	 phone_main.c는 csv 파일 형식의 내용을 읽어 들여 추가, 수정,
+	삭제, 정보보기 기능을 하는 프로그램이다.
+	
+	main프로그램과 함께 리스트를 관리하는 list.c와 list.h가 있으며,
+	main의 함수를 관리하는 phone.c와 phone.h 파일로 이루어져 있다.
+
+---------
+파일 목록
+---------
+
+* phone_main.c
+* phone.c
+* phone.h
+* list.c
+* list.h
+* linked-phone.csv
+
+------------
+phone_main.c
+------------
+	 phone_main.c (이하 main) 에서는 전화번호부의 파일오픈과
+	command의 구분, 파일의 저장된 파일을 연결리스트를 사용하여
+	읽어 들인후 command에 따라 동작을 실행한다.
+	
+-------
+command
+-------
+
+* add : 폰 정보 추가
+* del : 정보 삭제
+* search : 정보 검색
+* change : 정보 변경(미구현)
+
+----
+main
+----
+
+####command_value = phone_cat_command 
+	: command와 option을 분류한다. command 부족시(argc <= 2) help를 출력후 종료한다.
+
+####command_value
+	: 참이라면 phone_option에 command 값을 get_str에 option값을 저장한다. 
+
+####cat_lines = phone_cat_csv
+	: csv의 정보를 cat_lines에 저장한다.
+
+####list_init (&list, phone_destroy)
+	: 리스트 값을 초기화 한후 list_ins_next () 연결리스트를 작성할 준비를 한다.
+
+####phone_sort (&list)
+	: 연결리스트를 eig_no의 값 기준으로 정렬한다.
+
+####phone_print (&list)
+	: 연결된 모든 리스트의 세부 항목을 출력한다.
+
+--------------
+command_select
+--------------
+####add
+	: phone_eig_find ()를 이용하여 eig_num의 값을 생성한후 get_str의 값을 덧붙인후 
+  	 list_ins_next() 통하여 리스트에 삽입이 모두 끝난후 정렬한다.
+
+####del
+	: option에 일치되는 리스트 정보를 찾은후 해당 된다면 삭제 의향을 물은후 삭제 하거나
+  	 삭제를 하지 않고 넘긴다.
+
+####search
+	: option에 해당 하는 리스트를 찾아 출력한다.
+
+---------
+phone.c
+---------
+
+	 phone.c 는 main에서 사용되는 세부 함수가 포함 되었다.
+	main에서 요구 되는 파일 입출력 리스트의 삽입및 삭제를 총괄한다.
+
+---------
+함수 설명
+---------
+
+####char **
+####phone_cat_csv ()
+	: PHONE_CSV(linked-list.csv)파일 내용을 읽어 들여 문장별로 
+	 phone_save_in_lines 함수를 통하여 각 문장별로 정렬해 cat_lines 에 주소값을 반환한다.
+	 파일오픈 실패시 NULL값을 반환하고 프로그램을 종료한다.	
+
+####char **
+####phone_save_in_lines (char **lines, char *line)
+	: phone_cat_csv 에서 전달되는 line 를 new_lines에 순서 별로 저장한후 주소값을 반환한다.
+	 첫번째 문장 저장과 2번째 이후 부터의 저장 하는 용도의 조건문이 작성 되었다.
+
+####void
+####csv_parser_debug_lines (char **lines)
+	: lines에 정보를 확인 한다.
+
+####PhonePerson *
+####phone_list (char *str)
+	: PhonePerson *person (list)에 lines의 저장되 있는 line의 문장을 strtok
+	 함수를 통하여 count 변수값 증가로 switch 문을 통하여 각 정보를 입력한다.
+
+####void
+####phone_destroy (void *data)
+	: PhonePerson 의 세부 항목을 프리한다.
+
+####int
+####phone_cat_command (int argc_count, char **argv_str)
+	: argv 를 전달받아 0의 자리를 제외한 모든 argv를 검색 하여 처음 검색 되는 command 를 찾으면
+	위치를 반환하여 phone_option 에 command 값을 반환하고 그외의 argv는 **get_str 저장하여
+	option 으로 사용한다.
+
+####void
+####phone_get_str (int value, char **str_argv)
+	: command 값을 제외한 argv 의 정보를 저장하며 option 정보로 사용된다.
+
+####void
+####phone_free_str (void)
+	: get_str을 free 한다.
+
+####void
+####phone_print (ListElmt *elmt)
+	: 모든 elmt의 data를 phone_person_print (data) 를 통하여 출력 한다.
+
+####void
+####phone_person_print (PhonePerson *person)
+	: 전달받은 person의 세부정보를 출력한다.
+
+####void
+####phone_sort (List *list)
+	: person의 eig_no를 기준으로 리스트들을 정렬한다 eig_no의 가장 작은수가 list의 헤드에 
+	 등록 되고 순차적으로 list에 정렬된다.
+
+####ListElmt *
+####phone_find (ListElmt *elmt)
+	: i의 값이 static하게 설정하여 모든 list의 정보를 검색 할수 있게 구현 되었다.(?)
+	 phone_search_str ()에서 반환값이 참이면 해당되는 elmt의 주소값을 반환한다.
+
+####void
+####phone_search (List *list)
+	: 모든 elmt 를 phone_find (elmt)함수를 통하여 반환값이 참이라면 phone_person_print(person)
+	 에서 정보를 출력한다.
+
+####int
+####phone_search_str (PhonePerson *person, char *str)
+	: (!strcmp (person->option, str))이 참이라면  1를 반환하고 아니라면 0을 반환한다.
+	str이 person의 옵션에 해당 하는지 모두검사하게된다. 그중 한가지라도 같다면 참으로한다.
+
+####ListElmt *
+####phone_past_list (List *list, ListElmt *del_elmt)
+	: list_ins_next()는 정해진 리스트 위치 다음에 새로운 list를 연결 시키기 때문에 그 이전의
+	 리스트 주소값을 찾아 주소값을 리턴한다.
+
+####char *
+####phone_eig_find (ListElmt *elmt)
+	: eig_no 의 수를 비교하여 정보가 없다면 0을 정보가 있다면 비교하여 1차이가 아니라면
+	 차이가 생긴 eig_no의 값을 리턴한다.
+
+####char *
+####phone_next_eig (char *new_eig_num, char *eig_num, int eig_len)
+	: eig_num 의 값에 1을 더하여 new_eig_num의 값을 리턴한다.(참조하기 때문에 리턴값이 쓰이지는 않는다)
+
+-------
+phone.h
+-------
+phone.c 의 사용되는 매크로가 선언되어 있다.
+
+------
+list.c
+------
+####void
+####list_init (List *list, void (*destroy) (void *data))	
+	: 리스트를 초기화한다.
+
+####void
+####list_destroy (List *list)
+	: 모든 연결 리스트의 정보를 free 
+
+####int 
+####list_ins_next (List *list, ListElmt *element, const void *data)
+	: 항목에 대한 메모리 할당후 리스트에 항목을 삽입 한다. head의 위치와 head의 위치가 아닌곳으로
+	조건문이 적용 되어 있으며 삽입후 list->size조절을 한다.
+
+####int
+####list_rem_next (List *list, ListElmt *element, void **data)
+	: 빈 리스트항목은 삭제 하지 않으며 head의 위치와 head가 아닌 위치 삭제가 조건으로 나뉘어져 있다
+	삽입후 list->size의 조절을 한다.
+
+------
+list.h
+------
+	: list.c 에서 사용되는 헤더파일과 매크로가 선언 되었다.
+
+----------------
+linked-phone.csv
+----------------
+	: 개인의 phone 정보가 저장되어 있는 csv파일

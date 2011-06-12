@@ -1,0 +1,270 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" 
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+ <title>[Don't C study]</title> 
+
+<!-- metadata -->
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta name="generator" content="S5" />
+<meta name="version" content="S5 1.1" />
+<meta name="presdate" content="20050728" />
+<meta name="author" content="Eric A. Meyer" />
+<meta name="company" content="Complex Spiral Consulting" />
+<!-- configuration parameters -->
+<meta name="defaultView" content="slideshow" />
+<meta name="controlVis" content="hidden" />
+<!-- style sheet links -->
+<link rel="stylesheet" href="ui/default/slides.css" type="text/css" media="projection" id="slideProj" />
+<link rel="stylesheet" href="ui/default/outline.css" type="text/css" media="screen" id="outlineStyle" />
+<link rel="stylesheet" href="ui/default/print.css" type="text/css" media="print" id="slidePrint" />
+<link rel="stylesheet" href="ui/default/opera.css" type="text/css" media="projection" id="operaFix" />
+<!-- S5 JS -->
+<script src="ui/default/slides.js" type="text/javascript"></script>
+</head>
+<body>
+
+<div class="layout">
+<div id="controls"><!-- DO NOT EDIT --></div>
+<div id="currentSlide"><!-- DO NOT EDIT --></div>
+<div id="header"></div>
+<div id="footer">
+<h1>2011/5/1 일요일</h1>
+<h2>
+Chapter 25 메모리 관리와 메모리의 동적 할당
+</h2>
+</div>
+
+</div>
+
+
+<div class="presentation">
+
+<div class="slide">
+
+<h1>메모리 관리와 메모리의 동적 할당</h1>
+<ul>
+  <li><b>C언어 메모리 구조</li>
+  <li><b>메모리의 동적 할당</li>
+  </ul>
+
+<h3>발표자: 조한영</h3>
+</div>
+
+
+<div class="slide">
+<h1>C언어 메모리 구조</h1>
+
+<h2>하드웨어 관점에서의 메모리 공간</h2>
+<ul>
+<li>하드디스크(hard disk)</li>
+<br>
+<li>램(RAM)</li>
+<br>
+<li>캐쉬(cache)</li>
+<br>
+<li>레지스터(register)</li>
+</ul>
+</div>
+
+<div class="slide">
+<h1>하드디스크(hard disk)</h1>
+<br>
+
+<p>장점:<br>
+    컴퓨터의 전원이 나간 상태에서, 저장된 데이터가<br>
+   지워지지 않는 저장장치</p>
+<p>단점:<br>
+    데이터를 읽고 쓰는데 걸리는 시간이 저장된데이터가<br>
+    소멸되는 장치해 비해서 길다</p>
+<div class="handout">
+[any material that should appear in print but not on the slide]
+</div>
+</div>
+
+<div class="slide">
+<h1>램(RAM)</h1>
+<br>
+<p>특징:<br>
+    휘발성 메모리이며 하드디스크와 비교해 비교적 빠른 연산<br>
+   속도를 보임</p>
+<p>메인 메모리(mainmemory)<br>
+    프로그램의 실행속도를 향상 시키며 프로그램 실행<br>
+    중심이 되는 메모리</p>
+
+<div class="handout">
+[any material that should appear in print but not on the slide]
+</div>
+</div>
+
+<div class="slide">
+<h1>캐쉬(cahe)</h1>
+<br>
+<p>장점:<br>
+    램과 ALU사이에 존재하며 램보다 빠른 속도로 ALU의 접근이 가능</p>
+    <br>
+<p>단점:<br>
+    가격대 성능비가 비쌈</p>
+
+<div class="handout">
+[any material that should appear in print but not on the slide]
+</div>
+</div>
+
+<div class="slide">
+<h1>레지스터(register)</h1>
+<br>
+<p>특징:<br>
+<ul>
+    <li>산술연산을 포함한 연산의 결과는 레지스터에 저장</li>
+    <li>함수의 반환 값도 레지스터에 저장</li>
+</ul>
+    <br>
+    별도의 변수에 연산 결과를 저장 하지 않는다면<br>
+    레지스터에 머물다 소멸</p>
+
+<div class="handout">
+[any material that should appear in print but not on the slide]
+</div>
+</div>
+
+<div class="slide">
+<h1>(메모리 계층도)</h1>
+<br>
+<p style="width: 800px; margin: 0 auto; text-align: center;">
+<img src="Pix/memory_layer.JPG"><br>
+</p>
+
+<div class="handout">
+[any material that should appear in print but not on the slide]
+</div>
+</div>
+
+<div class="slide">
+<h1>가상 메모리(virtual memory)</h1>
+<br>
+<p style="width: 800px; margin: 0 auto; text-align: center;">
+<img src="Pix/virtual_memory.JPG"><br>
+
+</p>
+
+<div class="handout">
+[any material that should appear in print but not on the slide]
+</div>
+</div>
+
+<div class="slide">
+<h1>메모리 공간</h1>
+<br>
+<ul>
+    <li>프로그램의 실행과정에서 변수의 메모리 공간 할당</li>
+    <li>프로그램의 실행 과정에서 상수의 표현</li>
+    <li>연산 및 호출된 함수의 반환 값을 임시로 저장</li>
+    <li>프로그램은 가상 메모리 전부를 사용</li>
+    <li>가상메모리는 나눠서 사용해야 효율적인 사용이 가능</li>
+    <li>나누어진 영역별로 특성을 부여해야 활용도가 높음</li>
+</ul>
+<div class="handout">
+[any material that should appear in print but not on the slide]
+</div>
+</div>
+
+<div class="slide">
+<h1>가상 메모리를 나누는 기준</h1>
+<br>
+<ul>
+    <li>코드 영역</li>
+  실행할 프로그램 코드 (main, 기타함수)
+    <li>데이터 영역</li>
+  프로그램이 종료될 때까지 유지해야 할 데이터를 저장할 공간(전역 변수, static 변수)
+    <li>힙 영역</li>
+  프로그래머가 원하는 형태로 쓸 수있는 공간(동적할당)
+    <li>스택 영역</li>
+  아주 잠깐 사용하고 삭제할 데이터의 저장공간 (일반 변수)
+</ul>
+<div class="handout">
+[any material that should appear in print but not on the slide]
+</div>
+</div>
+
+<div class="slide">
+<h1>힙 영역 (동적할당:dynamic allocation)</h1>
+<br>
+<h2>힙 영역에 메모리 공간을 할당하는 malloc, calloc, realloc, free</h2>
+<ul>
+    <br>
+    <li>void *malloc (size_t size);</li>
+    <br>
+    <li>void *calloc (size_t elt_count, size_t elt_size);</li>
+    <br>
+    <li>void *reallo (void *ptr, size_t size);</li>
+    <br>
+    <li>void free(void *ptr);</li>
+</ul>
+<div class="handout">
+[any material that should appear in print but not on the slide]
+</div>
+</div>
+
+<div class="slide">
+<h1>malloc</h1>
+<br>
+<li>
+#include &lt;stdlib.h&gt; <br>
+void *malloc (size_t size);</li>
+<br>
+예제코드:
+<a href="http://codepad.org/8IlGjhCv">malloc-code</a>
+
+<div class="handout">
+[any material that should appear in print but not on the slide]
+</div>
+</div>
+
+<div class="slide">
+<h1>calloc</h1>
+<br>
+<li>
+#include &lt;stdlib.h&gt; <br>
+void *calloc (size_t elt_count, size_t elt_size);</li>
+<br>
+예제코드:
+<a href="http://codepad.org/hvtyki6H">calloc-code</a>
+<div class="handout">
+[any material that should appear in print but not on the slide]
+</div>
+</div>
+
+<div class="slide">
+<h1>realloc</h1>
+<br>
+<li>
+#include &lt;stdlib.h&gt; <br>
+void *realloc (void *ptr, size_t size);</li>
+<br>
+예제코드:
+<a href="http://codepad.org/FlwBJI3j">realloc-code</a>
+<div class="handout">
+[any material that should appear in print but not on the slide]
+</div>
+</div>
+
+<div class="slide">
+<h1>free</h1>
+<br>
+    <li>free는.........<br>
+    <br>
+    <br>
+    다음 예제에..</li>
+    <br>
+    <br>
+<div class="handout">
+[any material that should appear in print but not on the slide]
+</div>
+</div>
+
+</body>
+</html>
