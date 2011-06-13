@@ -29,6 +29,7 @@ insert_data (namecard arr[],
 {
   int i;
   int cnt = *cntPtr;
+
   namecard read;
 
   printf ("이름 : ");
@@ -53,6 +54,7 @@ insert_data (namecard arr[],
 
   arr[cnt] = read;
   (*cntPtr)++;
+
   printf ("\n");
 }
 
