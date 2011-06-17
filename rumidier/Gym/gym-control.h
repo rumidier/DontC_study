@@ -18,6 +18,8 @@ insert_data (gymperson arr[],
 
 void
 search_data (gymperson arr[],
-             int      cnt);
+             int       cnt);
+void
+in_last_date (gymperson *read);
 
 #endif
