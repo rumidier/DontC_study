@@ -69,7 +69,7 @@ insert_data (gymperson arr[],
   gets (read.kg);
   printf ("신장 : ");
   gets (read.height);
-  in_last_date (&read);
+  in_last_date (read.start_date, &read);
 
   for (i = 0; i < cnt; i++)
     {
@@ -135,7 +135,8 @@ search_data (gymperson arr[],
 }
 
 void
-in_last_date (gymperson *read)
+in_last_date (char       *save_month_ptr,
+              gymperson  *read)
 {
   //int i;
   char month[4];
@@ -143,7 +144,7 @@ in_last_date (gymperson *read)
 
   printf ("납입내역(납일개월수) : ");
   gets (month);
-  strcpy (save_month, read->start_date);
+  strcpy (save_month, save_month_ptr);
 
   if (strlen (month) == 1)
     {
@@ -357,7 +358,91 @@ in_last_date (gymperson *read)
                 }
               else if (month[1] == '1')
                 {
-                  //수정중
+                  /*
+                   * input 11 save_month 01~02
+                   */
+                  if ('0' == save_month[5] && ('1' == save_month[6]))
+                    {
+                      save_month[3]++;
+                      if (save_month[3] >= 58)
+                        {
+                          save_month[2]++;
+                          save_month[3] -= 10;
+                          save_month[5] += 1;
+                          save_month[6] += 1;
+                          strcpy (read->last_date, save_month);
+                        }
+                      else
+                        {
+                          save_month[5] += 1;
+                          save_month[6] += 1;
+                          strcpy (read->last_date, save_month);
+                        }
+                    }
+                  /*
+                   * input 11 save_month 02~09, 11,12
+                   */
+                  else if ('0' != save_month[6] && ('2' <= save_month[6] && save_month[6] <= '9'))
+                    {
+                      save_month[3]++;
+                      if (save_month[3] >= 58)
+                        {
+                          save_month[2]++;
+                          save_month[3] -= 10;
+                          save_month[6] -= 1;
+                          strcpy (read->last_date, save_month);
+                        }
+                      else
+                        {
+                          save_month[6] -= 1;
+                          strcpy (read->last_date, save_month);
+                        }
+                    }
+                  /*
+                   * input 11 save_month 10~11
+                   */
+                  else if ('1' == save_month[5] && ('0' == save_month[6]))
+                    {
+                      save_month[3]++;
+                      if (save_month[3] >= 58)
+                        {
+                          save_month[2]++;
+                          save_month[3] -= 10;
+                          save_month[5]--;
+                          save_month[6] += 8;
+                          strcpy (read->last_date, save_month);
+                        }
+                      else
+                        {
+                          save_month[5]--;
+                          save_month[6] += 8;
+                          strcpy (read->last_date, save_month);
+                        }
+                    }
+                  /*
+                   * input 11 save_month 12
+                   */
+                  else if ('1' == save_month[5] && ('2' == save_month[6]))
+                    {
+                      save_month[3]++;
+                      if (save_month[3] >= 58)
+                        {
+                          save_month[2]++;
+                          save_month[3] -= 10;
+                          save_month[6] -= 2;
+                          strcpy (read->last_date, save_month);
+                        }
+                      else
+                        {
+                          save_month[6] -= 2;
+                          strcpy (read->last_date, save_month);
+                        }
+                    }
+                  else
+                    {
+                      printf ("납입내역이 올바르지 않게 입력되었습니다 확인해 주세요[5]\n");
+                      strcpy (read->last_date, save_month);
+                    }
                 }
             }
           else if (month[1] == '2')
@@ -367,12 +452,10 @@ in_last_date (gymperson *read)
                 {
                   save_month[2]++;
                   save_month[3] -= 10;
-                  save_month[6] -= 2;
                   strcpy (read->last_date, save_month);
                 }
               else
                 {
-                  save_month[6] -= 2;
                   strcpy (read->last_date, save_month);
                 }
             }
@@ -393,4 +476,45 @@ in_last_date (gymperson *read)
       printf ("납입내역이 올바르지 않게 입력되었습니다 확인해 주세요[9]\n");
       strcpy (read->last_date, save_month);
     }
+}
+
+void
+sort_data (gymperson    *gym_list,
+           int          data_count)
+{
+  int i, j;
+  gymperson temp_gym;
+
+  for (i = 0; i < (data_count - 1); i++)
+    {
+      for (j = 0; j < (data_count - i) - 1; j++)
+        {
+          if (0 > strcmp (gym_list[j].last_date, gym_list[j + 1].last_date))
+            {
+              temp_gym = gym_list[j];
+              gym_list[j] = gym_list[j + 1];
+              gym_list[j + 1] = temp_gym;
+            }
+        }
+    }
+}
+
+void
+no_insert_money (gymperson    *gym_list,
+                 int          data_count)
+{
+  char input_date[20];
+  int i;
+
+  printf ("오늘 날짜를 입력해 주세요: ");
+  gets (input_date);
+
+  for (i = 0; i < data_count; i++)
+    {
+      if (1 <= strcmp (input_date, gym_list[i].last_date))
+        {
+          printf ("[[[%s]]\n", gym_list[i].last_date);
+        }
+    }
+
 }
