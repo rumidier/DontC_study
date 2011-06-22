@@ -25,7 +25,7 @@ load_file (gymperson    *list,
   fread ((void *)cntPtr, sizeof (int), 1, binFP);
   fclose (binFP);
 
-  cnt =* cntPtr; //확실히 모르겠음
+  cnt = *cntPtr; //확실히 모르겠음
   for (i = 0; i < cnt; i++)
     {
       fgets (list[i].name, SHORT_STR, txtFP);
