@@ -1,5 +1,6 @@
 #include <stdio.h>
-#include "file_control.h"
+
+#include "list.h"
 #include "gym-control.h"
 #include "gym.h"
 
@@ -10,35 +11,54 @@ main (int   argc,
       char *argv[])
 {
   int choice;
-  int data_count;
+  int i;
+  char **cat_lines;
 
-  data_count = 0;
+  gymperson *person;
+  List list;
+  ListElmt *elmt;
 
-  gymperson gym_list[300];
-  load_file (gym_list, &data_count);
+  cat_lines = gym_cat_csv ();
+  list_init (&list, NULL);
+  for (i = 0; cat_lines[i] != NULL; ++i)
+    {
+      char *token;
+
+      token = cat_lines[i];
+
+      person = gym_list (token);
+      elmt = list.head;
+      list_ins_next (&list, elmt, person);
+    }
+  gym_sort (&list);
 
   while (1)
     {
       show_menu ();
       choice = read_choice ();
 
+      if (choice == EXIT)
+      {
+        //       store_file (gym_list, data_count);
+        exit_prog ();
+        break;
+      }
+
       switch (choice)
         {
         case NEW:
-          insert_data (gym_list, &data_count);
+          gym_new_input (&list);
+          gym_sort (&list);
+
+          elmt = list.head;
+          gym_print (elmt);
           break;
         case MONEY:
-          sort_data (gym_list, data_count);
-          no_insert_money (gym_list, data_count);
+          gym_money (&list);
           break;
         case PERSON:
-          search_data (gym_list, data_count);
+          search_person (&list);
           break;
-        case EXIT:
-          store_file (gym_list, data_count);
-          exit_prog ();
-
-          return 0;
         }
     }
 
