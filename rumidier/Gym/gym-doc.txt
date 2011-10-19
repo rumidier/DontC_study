@@ -1,0 +1,106 @@
+사용 변수
+  이름 - char name[SHORT_STR];
+  회원번호 - char name_num[SHORT_STR];
+  입관일 - char start_date[SHORT_STR];
+  전화번호 - char phone[SHORT_STR];
+  주소 - char addr[LONG_STR];
+  나이 - char age[SHORT_STR];
+  체중 - char weight[SHORT_STR];
+  신장 - char height[SHORT_STR];
+  회비수납일 - char last_date[SHORT_STR];
+
+사용 소스파일
+gym-main.c - gym main
+gym-control.c - gym-main 함수
+
+연결리스트 관리
+list.c
+list.h
+----------------------------------------------------
+gym-control.c 함수
+
+void
+show_menu (void);
+:메인 메뉴 선택부분 (등록, 관리, 프로필, 종료)
+
+int
+read_choice (void);
+:메뉴 선택 키 입력
+
+void
+exit_prog (void);
+:종료시 감사합니다 출력
+
+char **
+gym_cat_csv ();
+:filename.csv 읽어 들임 (개인별 자료 반환)
+
+char **
+gym_save_in_lines (char    **lines,
+                   char    *line);
+:gym_cat_csv 에서 읽어 들인 line을 lines 에 입력
+
+gymperson *
+gym_list (char *str);
+:개인별 자료 구조체에 입력 (구조체 반환)
+
+void
+gym_sort (List *list);
+:회원번호 기준으로 구조체 정렬
+
+||||||||||||||||||
+char *
+gym_eig_find (ListElmt *elmt);
+:공백 회원번호 찾기
+
+char *
+gym_next_eig (char *eig_num,
+              int   eig_len);
+:입력될 회원번호 반환
+
+신규 등록 (choice = NEW)
+void
+gym_new_input (List *list);
+:신규등록 함수
+
+char *
+gym_eig_find (ListElmt *elmt);
+:공백 회원번호 찾기
+
+char *
+gym_next_eig (char *eig_num,
+              int   eig_len);
+:입력될 회원번호 반환
+
+void
+in_last_date (char       *save_month_ptr,
+              gymperson  *read);
+:입관일 + 결재월 (01~12달만 가능)
+
+void
+search_person (List *list);
+:이름 입력.
+
+void
+gym_print (ListElmt *elmt);
+:구조체의 의 이름과 입력된 이름이 일치하면 -> gym_person_print
+
+void
+gym_person_print (gymperson *person);
+:person 구조체 각 출력
+
+void
+no_insert_money (gymperson    *gym_list,
+                 int          data_count);
+:너는 뭐니?
+
+void
+store_file (gymperson   *list,
+            int          cnt);
+
+
+
+void
+csv_parser_debug_lines (char **lines);
+: 디버그 라인 (현재 별 의미 없음)
+

@@ -69,4 +69,10 @@ void
 gym_unpaid (List *list,
             char *current);
 
+void
+gym_extention (List *list);
+
+char *
+gym_current_time (void);
+
 #endif

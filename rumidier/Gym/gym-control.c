@@ -1092,33 +1092,13 @@ void
 gym_money (List *list)
 {
   int choice;
-  time_t current;
-  struct tm *sptime;
-  char *buf;
-  char current_day[40];
-  memset (current_day, 0, 40);
-
-  current = time (NULL);
-  sptime = localtime (&current);
-
-  buf = gym_get_current ((sptime->tm_year + 1900), 1000);
-  strcat (current_day, buf);
-  strcat (current_day, "-");
-  free (buf);
-  buf = gym_get_current ((sptime->tm_mon + 1), 10);
-  strcat (current_day, buf);
-  strcat (current_day, "-");
-  free (buf);
-  buf = gym_get_current ((sptime->tm_mday), 10);
-  strcat (current_day, buf);
-  strcat (current_day, "\0");
-  free (buf);
+  char *current_day;
 
   printf ("회비 관리\n");
   printf ("1.미납자 명단\n");
-  printf ("2.기간 연장(01~12)(미구현)\n");
-  printf ("3.추가 연장(2011-01-01)(미구현)\n");
+  printf ("2.회비납부\n");
   scanf ("%d", &choice);
+  current_day = gym_current_time ();
 
   switch (choice)
     {
@@ -1126,6 +1106,7 @@ gym_money (List *list)
       gym_unpaid (list, current_day);
       break;
     case 2:
+      gym_extention (list);
       break;
     case 3:
       break;
@@ -1133,6 +1114,8 @@ gym_money (List *list)
       printf ("입력이 바르지 않습니다.\n");
       break;
     }
+
+  free (current_day);
 }
 
 char *
@@ -1264,4 +1247,81 @@ gym_unpaid (List *list,
       elmt = elmt->next;
     }
   printf ("2개월 안의 미납부자 총 %d명 입니다.\n", count);
+}
+
+void
+gym_extention (List *list)
+{
+  int choice;
+  char name[SHORT_STR];
+  char past_last_day[40];
+  memset (past_last_day, 0, 40);
+
+  ListElmt *elmt;
+  gymperson *person;
+
+  elmt = list->head->next;
+
+  getchar ();
+  printf ("납부자 이름을 입력해 주세요 : ");
+  gets (name);
+
+  while (1)
+    {
+      if (elmt == NULL)
+        {
+          puts ("모든 회원 조회가 끝났습니다.\n");
+          break;
+        }
+      person = elmt->data;
+      if (!strcmp (person->name, name))
+        {
+          printf ("1.최종납부일 - 기간 연장(01~12)\n");
+          printf ("2.오늘날짜 - 기간연장(01~12)\n");
+          printf ("3.최종납부일 직접 입력\n");
+          scanf ("%d", &choice);
+
+          switch (choice)
+            {
+            case 1:
+                {
+                  ( person->last_date);
+                  in_last_date (person->last_date, person);
+                  printf ("current day : %s\n", person->last_date);
+                  //gym_last_txt (past_last_day
+                   //             person->last_date);
+                }
+            }
+        }
+
+      elmt = elmt->next;
+    }
+}
+
+char *
+gym_current_time (void)
+{
+  char *buf;
+  char *current_day;
+  time_t current;
+  struct tm *sptime;
+
+  current = time (NULL);
+  current_day = (char *) malloc (sizeof (char) * 40);
+  sptime = localtime (&current);
+
+  buf = gym_get_current ((sptime->tm_year + 1900), 1000);
+  strcpy (current_day, buf);
+  strcat (current_day, "-");
+  free (buf);
+  buf = gym_get_current ((sptime->tm_mon + 1), 10);
+  strcat (current_day, buf);
+  strcat (current_day, "-");
+  free (buf);
+  buf = gym_get_current ((sptime->tm_mday), 10);
+  strcat (current_day, buf);
+  strcat (current_day, "\0");
+  free (buf);
+
+  return current_day;
 }

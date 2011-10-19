@@ -39,7 +39,7 @@ main (int   argc,
 
       if (choice == EXIT)
       {
-        //       store_file (gym_list, data_count);
+        //store_file (gym_list, data_count);
         exit_prog ();
         break;
       }
